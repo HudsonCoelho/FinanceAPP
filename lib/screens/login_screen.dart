@@ -1,8 +1,54 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+class _LoginScreenState extends State<LoginScreen> {
+  String usuario = "";
+  String senha = "";
+  bool senhaVisivel = false;
+  bool lembrarMe = false;
+
+  final String usuarioPadrao = "admin";
+  final String senhaPadrao = "123456";
+
+  void validarLogin() {
+
+    if (usuario.isEmpty || senha.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Preencha todos os campos"),
+        ),
+      );
+      return;
+    }
+
+    if (usuario != usuarioPadrao) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Usuário incorreto"),
+        ),
+      );
+      return;
+    }
+
+    if (senha != senhaPadrao) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Senha incorreta"),
+        ),
+      );
+      return;
+    }
+
+    Navigator.pushReplacementNamed(
+      context,
+      '/dashboard',
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +145,9 @@ class LoginScreen extends StatelessWidget {
 
                   // Campo Usuário
                   TextField(
+                    onChanged: (value) {
+                      usuario = value;
+                    },
                     decoration: InputDecoration(
                       hintText: "Usuário",
                       prefixIcon: const Icon(
@@ -110,9 +159,6 @@ class LoginScreen extends StatelessWidget {
                       contentPadding: const EdgeInsets.symmetric(vertical: 16),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: Color(0xFFE0E0E0),
-                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -127,26 +173,41 @@ class LoginScreen extends StatelessWidget {
 
                   // Campo Senha
                   TextField(
-                    obscureText: true,
+                    obscureText: !senhaVisivel,
+
+                    onChanged: (value) {
+                      senha = value;
+                    },
+
                     decoration: InputDecoration(
                       hintText: "Senha",
+
                       prefixIcon: const Icon(
                         Icons.lock_outline,
                         color: Colors.grey,
                       ),
-                      suffixIcon: const Icon(
-                        Icons.visibility_off_outlined,
-                        color: Colors.grey,
+
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          senhaVisivel
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            senhaVisivel = !senhaVisivel;
+                          });
+                        },
                       ),
+
                       filled: true,
                       fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(vertical: 16),
+
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: Color(0xFFE0E0E0),
-                        ),
                       ),
+
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
@@ -168,8 +229,12 @@ class LoginScreen extends StatelessWidget {
                             width: 24,
                             height: 24,
                             child: Checkbox(
-                              value: false,
-                              onChanged: (value) {},
+                              value: lembrarMe,
+                              onChanged: (value) {
+                                setState((){
+                                  lembrarMe = value!;
+                                });
+                              },
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),
@@ -217,7 +282,7 @@ class LoginScreen extends StatelessWidget {
                         elevation: 0,
                       ),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/dashboard');
+                        validarLogin();
                       },
                       child: const Text(
                         "Entrar",
