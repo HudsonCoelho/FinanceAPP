@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CadastroScreen extends StatelessWidget {
+class CadastroScreen extends StatefulWidget {
   const CadastroScreen({super.key});
 
+  @override
+  State<CadastroScreen> createState() => _CadastroScreenState();
+}
+
+class _CadastroScreenState extends State<CadastroScreen> {
+  String _descricao = '';
+  String _valor = '';
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -67,6 +74,7 @@ class CadastroScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                onChanged: (valor) => _descricao = valor,
               ),
 
               const SizedBox(height: 20),
@@ -93,6 +101,7 @@ class CadastroScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                onChanged: (valor) => _valor = valor,
               ),
 
               const SizedBox(height: 20),
@@ -202,6 +211,29 @@ class CadastroScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     // Lógica para salvar
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Confirmar Lançamento?'),
+                          content: Text('Deseja salvar a despesa "$_descricao" no valor de R\$ $_valor?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Cancelar'),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF093A1C)),
+                              onPressed: () {
+                                Navigator.pop(context); // Fecha o Pop-up
+                                Navigator.pop(context); // Volta para a tela anterior
+                              },
+                              child: const Text('Confirmar', style: TextStyle(color: Colors.white)),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: const Text(
                     'Salvar Lançamento',

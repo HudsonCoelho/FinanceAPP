@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'custom_bottom_bar.dart'; 
+
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -160,21 +162,7 @@ class DashboardScreen extends StatelessWidget {
       ),
 
       // --- BOTTOM NAVIGATION BAR ---
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF093A1C),
-        unselectedItemColor: Colors.grey,
-        selectedFontSize: 11,
-        unselectedFontSize: 11,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Início'),
-          BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: 'Lançamentos'),
-          BottomNavigationBarItem(icon: Icon(Icons.credit_card), label: 'Cartões'),
-          BottomNavigationBarItem(icon: Icon(Icons.pie_chart_outline), label: 'Parcelamentos'),
-          BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'Mais'),
-        ],
-      ),
+      bottomNavigationBar: const CustomBottomBar(currentIndex: 0),  
     );
   }
 
