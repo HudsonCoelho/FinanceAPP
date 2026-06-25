@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'bottom_bar.dart';
 
-class ParcelamentoScreen extends StatelessWidget {
+class ParcelamentoScreen extends StatefulWidget {
   const ParcelamentoScreen({super.key});
 
+  @override
+  State<ParcelamentoScreen> createState() => _ParcelamentoScreenState();
+}
+
+class _ParcelamentoScreenState extends State<ParcelamentoScreen> {
+  String _descricao = '';
+  String _valorParcela = '';
+  String _quantidadeParcelas = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,21 +133,7 @@ class ParcelamentoScreen extends StatelessWidget {
       ),
 
       // --- BOTTOM NAVIGATION BAR ---
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3, // Aba Parcelamentos ativa
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF093A1C),
-        unselectedItemColor: Colors.grey,
-        selectedFontSize: 11,
-        unselectedFontSize: 11,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Início'),
-          BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: 'Lançamentos'),
-          BottomNavigationBarItem(icon: Icon(Icons.credit_card), label: 'Cartões'),
-          BottomNavigationBarItem(icon: Icon(Icons.pie_chart), label: 'Parcelamentos'),
-          BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'Mais'),
-        ],
-      ),
+      bottomNavigationBar: const CustomBottomBar(currentIndex: 3),
     );
   }
 
