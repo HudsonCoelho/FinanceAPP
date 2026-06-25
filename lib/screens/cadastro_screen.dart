@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'bottom_bar.dart';
 
 class CadastroScreen extends StatefulWidget {
   const CadastroScreen({super.key});
@@ -248,6 +249,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
             ],
           ),
         ),
+        bottomNavigationBar: const CustomBottomBar(currentIndex: 1), 
       ),
     );
   }
