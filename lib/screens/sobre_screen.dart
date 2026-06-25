@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'bottom_bar.dart';
 
 class SobreScreen extends StatelessWidget {
   const SobreScreen({super.key});
@@ -135,6 +136,7 @@ class SobreScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: const CustomBottomBar(currentIndex: 4), 
     );
   }
 
